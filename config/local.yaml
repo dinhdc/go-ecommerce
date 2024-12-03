@@ -1,24 +1,26 @@
 server:
   port: 8002
 
-databases:
-  - username: admin
-    password: admin
-    host: localhost
-    dbName: shopdev
+mysql:
+  host: localhost
+  port: 3306
+  username: root
+  password: root1234
+  dbname: shopdev
+  maxIdleConns: 10
+  maxOpenConns: 100
+  connMaxLifetime: 3600
 
-  - username: admin2
-    password: admin2
-    host: localhost2
-    dbName: shopdev2
-
-security:
-  jwt:
-    key: abc123
+logger:
+  log_level: debug
+  file_log_name: "./storages/logs/dev.001.log"
+  max_size: 500
+  max_backups: 3
+  max_age: 28
+  compress: true
 
 redis:
-  user: admin
-elasticsearch:
-  user: admin
-rabbitmq:
-  user: admin
+  host: localhost
+  port: 6379
+  password: 
+  database: 0

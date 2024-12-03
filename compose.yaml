@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql
+    container_name: go_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root1234
+      - MYSQL_DATABASE=shopdev
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis
+    container_name: go_redis
+    ports:
+      - "6379:6379"
+      
