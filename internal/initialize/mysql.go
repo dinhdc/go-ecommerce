@@ -8,6 +8,7 @@ import (
 	"github.com/dinhdc/go-ecommerce/internal/po"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
+	"gorm.io/gen"
 	"gorm.io/gorm"
 )
 
@@ -32,7 +33,6 @@ func InitMysql() {
 	// set pool
 	SetPool()
 
-	migrateTables()
 }
 
 func SetPool() {
@@ -44,6 +44,20 @@ func SetPool() {
 	sqlDb.SetConnMaxIdleTime(time.Duration(m.MaxIdleConns))
 	sqlDb.SetMaxOpenConns(m.MaxOpenConns)
 	sqlDb.SetConnMaxLifetime(time.Duration(m.ConnMaxLifetime))
+}
+
+func genTableDao() {
+	g := gen.NewGenerator(gen.Config{
+		OutPath: "./internal/model",
+		Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
+	})
+
+	g.UseDB(global.Mdb)
+	g.GenerateModel("go_crm_users")
+	// Generate basic type-safe DAO API for struct `model.User` following conventions
+
+	// Generate the code
+	g.Execute()
 }
 
 func migrateTables() {

@@ -1,23 +1,12 @@
 package service
 
 import (
+	"fmt"
+
 	"github.com/dinhdc/go-ecommerce/internal/repo"
+	"github.com/dinhdc/go-ecommerce/internal/utils/random"
 	"github.com/dinhdc/go-ecommerce/pkg/response"
 )
-
-// type UserService struct {
-// 	userRepo *repo.UserRepo
-// }
-
-// func NewUserService() *UserService {
-// 	return &UserService{
-// 		userRepo: repo.NewUserRepo(),
-// 	}
-// }
-
-// func (us *UserService) GetInfoUser() string {
-// 	return us.userRepo.GetInfoUser()
-// }
 
 // INTERFACE
 type IUserService interface {
@@ -30,10 +19,25 @@ type userService struct {
 
 // Register implements IUserService.
 func (us *userService) Register(email string, purpose string) int {
+	// 0. hash email
+
+	// 5. check OTP is avaibale
+
+	// 6. user spam otp
+
 	// 1. check email exists
 	if us.userRepo.GetUserByEmail(email) {
 		return response.ErrCodeUserHasAlreadyExist
 	}
+	// 2, new OTP
+	otp := random.GenerateSixDigitOtp()
+	if purpose == "TEST_USER" {
+		otp = 123456
+	}
+	fmt.Sprintf("Otp is :::%d\n", otp)
+	// 3. save OTP in Redis with exp
+	
+	// 4. send email OTP
 	return response.ErrCodeSuccess
 }
 

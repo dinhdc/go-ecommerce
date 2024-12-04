@@ -13,5 +13,5 @@ func (pr *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
 		productRouterPublic.GET("/detail/:id")
 	}
 	// private router
-	
+
 }
